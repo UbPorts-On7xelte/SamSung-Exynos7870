@@ -7,11 +7,10 @@ env:
 task:
   name: master
   timeout_in: 2h
-  only_if: $CIRRUS_REPO_OWNER == 'UbPorts-On7xelte'
   container:
     image: dopaemon/bionic:latest
     cpu: 8
-    memory: 32G
+    memory: 24G
 
   install_packages_ubuntu_script:
     - sudo apt-get update
