@@ -1,0 +1,30 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+
+    rclone_conf: "ENCRYPTED[a0816c0b2683df8ba22e8a4edf5293cf009897d403086d46924601d366cb5cd73d29cc1050608d83ada545200db850e2]"
+
+task:
+  name: master
+  timeout_in: 2h
+  only_if: $CIRRUS_REPO_OWNER == 'UbPorts-On7xelte'
+  container:
+    image: dopaemon/bionic:latest
+    cpu: 8
+    memory: 32G
+
+  install_packages_ubuntu_script:
+    - sudo apt-get update
+    - sudo apt-get install -y ccache rclone git-lfs bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev
+  rclone_configure_script:
+    - mkdir -p ~/.config/rclone
+    - echo "$rclone_conf" > ~/.config/rclone/rclone.conf
+  halium_script:
+    - git clone https://github.com/UbPorts-On7xelte/SamSung-Exynos7870.git /tmp/ci/halium
+    - sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio curl git kmod libssl-dev libtinfo5 python2 sudo unzip wget xz-utils -y --no-install-recommends
+    - ln -sf python2.7 /usr/bin/python
+    - wget https://raw.githubusercontent.com/LineageOS/android_system_core/lineage-17.1/mkbootimg/mkbootimg.py -O /usr/bin/mkbootimg
+    - ./build.sh
+  halium_upload_script:
+    - cd /tmp/ci/halium/out/
+    - rclone copy halium-boot.img drive:Share/halium/on7xelte/
