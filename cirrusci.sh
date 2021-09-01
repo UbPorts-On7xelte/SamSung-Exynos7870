@@ -21,3 +21,4 @@ sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio
 ln -sf python2.7 /usr/bin/python
 wget https://raw.githubusercontent.com/LineageOS/android_system_core/lineage-17.1/mkbootimg/mkbootimg.py -O /usr/bin/mkbootimg
 ./build.sh
+ls out
