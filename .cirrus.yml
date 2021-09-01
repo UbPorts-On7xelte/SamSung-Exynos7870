@@ -16,16 +16,7 @@ task:
     - rm -rf *
     - sudo apt-get update
     - sudo apt-get install -y ccache rclone
-  rclone_configure_script:
-    - mkdir -p ~/.config/rclone
-    - echo "$conf" > ~/.config/rclone/rclone.conf
   halium_script:
     - git clone https://github.com/UbPorts-On7xelte/SamSung-Exynos7870.git /tmp/ci/halium
     - cd /tmp/ci/halium
-    - sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio curl git kmod libssl-dev libtinfo5 python2 sudo unzip wget xz-utils -y --no-install-recommends
-    - ln -sf python2.7 /usr/bin/python
-    - wget https://raw.githubusercontent.com/LineageOS/android_system_core/lineage-17.1/mkbootimg/mkbootimg.py -O /usr/bin/mkbootimg
-    - ./build.sh
-  halium_upload_script:
-    - cd /tmp/ci/halium/out/
-    - rclone copy halium-boot.img drive:Share/halium/on7xelte/
+    - ./cirrusci.sh
