@@ -22,3 +22,5 @@ ln -sf python2.7 /usr/bin/python
 wget https://raw.githubusercontent.com/LineageOS/android_system_core/lineage-17.1/mkbootimg/mkbootimg.py -O /usr/bin/mkbootimg
 ./build.sh
 ls out
+cd out
+rclone copy device_on7xelte.tar.xz drive:Share/halium/on7xelte/
