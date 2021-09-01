@@ -21,6 +21,9 @@ sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio
 ln -sf python2.7 /usr/bin/python
 wget https://raw.githubusercontent.com/LineageOS/android_system_core/lineage-17.1/mkbootimg/mkbootimg.py -O /usr/bin/mkbootimg
 ./build.sh
+
+./build/fetch-and-prepare-latest-ota.sh "16.04/arm64/android9/devel" "on7xelte" ota
+mkdir -p out
+./build/system-image-from-ota.sh ota/ubuntu_command out
+
 ls out
-cd out
-rclone copy device_on7xelte.tar.xz drive:Share/halium/on7xelte/
